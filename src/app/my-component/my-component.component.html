@@ -1,0 +1,75 @@
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="side-panel">
+                    <div class="row" *ngFor="let item of singlePerson">
+                        <div class="col-12">
+                            <h4>{{ item.name }}</h4>
+                        </div>
+                        <div class="col-12 mb-4">
+                            <mat-carousel [autoplay]="true" [interval]="1000" [hideArrows]="true" [proportion]="50">
+                                <mat-carousel-slide *ngFor="let icn of item.images">
+                                    <img src="{{ icn }}" alt="Image {{ icn }}" class="carousel-img">
+                                </mat-carousel-slide>
+                            </mat-carousel>
+                        </div>
+                        <div class="col-12">
+                            <div class="info-label">Name/Designation</div>
+                            <div class="info-value">{{ item.title }}</div>
+                        </div>
+                        <hr class="mt-2" />
+                        <div class="col-12">
+                            <div class="info-label">About</div>
+                            <div class="info-value">{{ item.about }}</div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="info-label">Title</div>
+                                <div class="info-value">Human</div>
+                                <hr class="mt-2" />
+                                <div class="info-label">Age</div>
+                                <div class="info-value">{{ item.Age }}</div>
+                                <hr class="mt-2" />
+                                <div class="info-label">Height</div>
+                                <div class="info-value">{{ item.height }}</div>
+                                <hr class="mt-2" />
+                            </div>
+                            <div class="col-6">
+                                <div class="info-label">Gender</div>
+                                <div class="info-value">{{ item.gender }}</div>
+                                <hr class="mt-2" />
+                                <div class="info-label">Body Type</div>
+                                <div class="info-value">{{ item.bodyType }}</div>
+                                <hr class="mt-2" />
+                                <div class="info-label">Weight</div>
+                                <div class="info-value">{{ item.weight }}</div>
+                                <hr class="mt-2" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="right-panel">
+                    <p-organizationChart [value]="TreeData" [selectionMode]="'single'" (onNodeSelect)="getDetail($event.node)">
+                        <ng-template let-node pTemplate="person">
+                          <div class="text-center" (click)="expandNode(node.data.id)">
+                            <img width="150px" height="115px" [src]="node.data.image" class="w-3rem h-3rem">
+                            <div class="info-value">{{ node.data.name }}</div>
+                            <div class="info-value role">{{ node.data.title }}</div>
+                          </div>
+                          <div class="relationships">
+                            <p *ngFor="let relatedNodeId of node.data.relationships">
+                              Related to: {{ findNodeLabelById(relatedNodeId) }}
+                            </p>
+                          </div>
+                        </ng-template>
+                      </p-organizationChart>                                         
+                </div>
+            </div>
+        </div>
+    </div>
+
